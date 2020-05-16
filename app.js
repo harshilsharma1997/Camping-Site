@@ -16,7 +16,26 @@ var flash           =   require("connect-flash");
 
 
 
-mongoose.connect("mongodb://localhost/yelp_camp");
+// mongoose.connect("mongodb://localhost/yelp_camp");
+// mongoose.connect("mongodb+srv://harshil:@aVKsP9fhJ5ax7h@yelpcamp-yqnz4.mongodb.net/test?retryWrites=true&w=majority");
+mongoose.connect('mongodb+srv://harshil:@aVKsP9fhJ5ax7h@yelpcamp-yqnz4.mongodb.net/test?retryWrites=true&w=majority', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true, 
+	useCreateIndex: true
+}).then(() => {
+	console.log('Connected to DB!');
+}).catch(err => {
+	console.log('ERROR:', err.message);
+});
+
+// const MongoClient = require('mongodb').MongoClient;
+// const uri = "mongodb+srv://harshil:@aVKsP9fhJ5ax7h@yelpcamp-yqnz4.mongodb.net/test?retryWrites=true&w=majority";
+// const client = new MongoClient(uri, { useNewUrlParser: true,useUnifiedTopology: true });
+// client.connect(err => {
+//   const collection = client.db("test").collection("devices");
+//   // perform actions on the collection object
+//   client.close();
+// });
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine","ejs");
@@ -55,7 +74,7 @@ app.use(indexRoutes);
 app.use(commentRoutes);
 app.use(campgroundRoutes);
 
-app.listen(3000,function(){
+app.listen(process.env.PORT||3000,process.env.IP,function(){
     console.log("YelpCamp has started!")
 });
 
